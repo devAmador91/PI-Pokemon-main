@@ -5,12 +5,31 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
     id:{
-      type: DataTypes
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      get(){
+        return dataTypeValue(`${id}-byUser`)
+      }
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
+    hp: {
+      type: DataTypes.INTEGER
+    },
+    defense: {
+      type: DataTypes.INTEGER
+    },
+    speed: {
+      type: DataTypes.INTEGER
+    },
+    weight: {
+      type: DataTypes.INTEGER
+    },
+    height: {
+      type: DataTypes.INTEGER
+    }
   });
 };
