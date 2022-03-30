@@ -23,7 +23,7 @@ fs.readdirSync(path.join(__dirname, '/models'))
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
-let entries = Object.entries(sequelize.models);
+let entries = Object.entries(sequelize.models);//Los objetos pueden ser creados utilzando el constructor Object()
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
@@ -36,7 +36,6 @@ const { Pokemon, Type } = sequelize.models;
 
 Pokemon.belongsToMany(Type, { through: 'Pokemon-Types' });
 Type.belongsToMany(Pokemon, { through: 'Pokemon-Types' });
-
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
