@@ -97,15 +97,16 @@ router.get("/pokemons", async (req, res) => {
 router.get("/pokemons/:idPokemon", async (req, res) => {
   const { idPokemon } = req.params;
   //preguntar a la bd si tiene pokemones
+  console.log(idPokemon)
 
   try {
-      //implemantar la decodificacion del id con buffer
+      const pokemonsCreatedByUser = await Pokemon.findByPk(idPokemon)
+      if(pokemonsCreatedByUser){
+      return res.send(pokemonsCreatedByUser)
+      }
   } catch (error) {
-      
+      console.log("El pokemon no existe en la base de datos")
   }
-
-
-
 
   try {
     const responseApi = await fetch(`${url}${idPokemon}`);
@@ -119,12 +120,12 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
         s.stat.name === "defense" ||
         s.stat.name === "speed"
       )
-        statistics[s.stat.name] = s.base_stat;
+        statistics[s.stat.name] = s.base_stat; //agrega las propiedades traidas de la api en un objeto
     });
     return res.json(statistics);
   } catch (error) {
     console.log(error);
-    return res.send(error);
+    return res.status(404).send({msg:"El id no existe en la api"});
   }
 });
 
@@ -168,7 +169,7 @@ router.post("/pokemons", async (req, res) => {
 
   //Crear un id unico a partir del nombre
 
-  id = new Buffer(name).toString("base64")
+  id = new Buffer.from(name).toString("base64")
   
 
   try {
