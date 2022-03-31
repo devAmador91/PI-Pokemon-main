@@ -97,6 +97,16 @@ router.get("/pokemons", async (req, res) => {
 router.get("/pokemons/:idPokemon", async (req, res) => {
   const { idPokemon } = req.params;
   //preguntar a la bd si tiene pokemones
+
+  try {
+      //implemantar la decodificacion del id con buffer
+  } catch (error) {
+      
+  }
+
+
+
+
   try {
     const responseApi = await fetch(`${url}${idPokemon}`);
     const pokemonJson = await responseApi.json();
@@ -120,22 +130,25 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
 
 router.post("/pokemons", async (req, res) => {
   const { name, height, weight, hp, attack, defense, speed, img } = req.body;
-
   //Validaciones de tipos de datos:
 
   if (name && height && weight && hp && attack && defense && speed && img) {
-    if (typeof name !== "string") {
-      return res.status(400).send({ msg: "El tipo de dato no es valido" });
+    if (typeof(name,img) !== "string") {
+      return res
+        .status(400)
+        .send({ msg: "El tipo de dato de name no es valido!!!" });
     }
 
-    if ((typeof height, weight, hp, attack, defense, speed !== "number")) {
-      return res.status(400).send({ msg: "El tipo de dato no es valido" });
+    if (typeof(height, weight, hp, attack, defense, speed) !== "number") {
+      return res.status(400).send({
+        msg: "El tipo de dato de alguno de estos valores (height, weight, hp, attack, defense, speed) no es valido!!!",
+      });
     }
+  } else {
+    return res
+      .status(400)
+      .send({ msg: "Alguno de los datos enviados es nulo" });
   }
-
-  //Validacion de imagen ****************************
-
-
 
   //Validaciones de existencia en api y bd:
 
@@ -145,20 +158,26 @@ router.post("/pokemons", async (req, res) => {
     const responseApi = await fetch(`${url}${name}`);
     const pokemonJson = await responseApi.json();
     if (pokemonJson) {
-      return res.send({ msg: "El nombre del pokemon ingresado ya existe" });
+      return res.status(400).send({ msg: "El nombre del pokemon ingresado ya existe" });
     }
   } catch (error) {
-    res.sendStatus(404);
+    console.log("El nombre del pokemon no existe en la api");
   }
 
   //Buscar el nombre ingresado en la bd y si no existe crearlo
 
+  //Crear un id unico a partir del nombre
+
+  id = new Buffer(name).toString("base64")
+  
+
   try {
     const [valor, booleano] = await Pokemon.findOrCreate({
       where: {
-        name
+        name,
       },
       defaults: {
+        id,
         name,
         hp,
         attack,
@@ -172,17 +191,18 @@ router.post("/pokemons", async (req, res) => {
 
     if (booleano) {
       return res.send({
-           msg: "El pokemon fue creado con exito",
-           valor 
-        });
+        msg: "El pokemon fue creado con exito",
+        valor,
+      });
     }
-    res.send({
+    res.status(400).send({
       msg: "El nombre del pokemon ingresado ya existe en la base de datos",
     });
   } catch (error) {
     console.error(error);
     res.send(error);
   }
+  
 });
 
 module.exports = router;
