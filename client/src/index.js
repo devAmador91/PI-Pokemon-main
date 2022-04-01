@@ -6,11 +6,13 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./src/store";
 import { BrowserRouter } from "react-router-dom";
+import GlobalFonts from './src/style-components/fonts/fonts.js'
 
 ReactDOM.render(
   <React.Fragment>
     <Provider store={store}>
       <BrowserRouter>
+      <GlobalFonts/>
         <App />
       </BrowserRouter>
     </Provider>

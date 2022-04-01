@@ -1,6 +1,7 @@
 import './App.css';
 import {Route} from "react-router-dom";
 import React from 'react';
+
 import NavBar from './src/components/NavBar.jsx';
 import LandingPage from './src/components/LandingPage.jsx'
 import Pokemons from './src/components/Pokemons.jsx';
@@ -16,6 +17,7 @@ function App() {
       <Route path="/pokemons" render={()=><Pokemons/>}/>
       <Route path="/pokemonDetails" render={()=><PokemonDetails/>}/>
       <Route path="/createPokemon" render={()=><CreatePokemon/>}/>
+      
     </React.Fragment>
   );
 }
