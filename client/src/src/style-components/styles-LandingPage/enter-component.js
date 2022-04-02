@@ -26,7 +26,11 @@ export const StyledText = styled(NavLink)`
 text-decoration: none;
 `
 
-export const FontPokemonGlobal = createGlobalStyle`
+export const PokemonGlobalCss = createGlobalStyle`
+*{
+  margin: 0px;
+}
+
 h3{
 display: inline-block;
 font-family:'PokemonSolid';

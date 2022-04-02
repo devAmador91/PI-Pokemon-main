@@ -9,15 +9,14 @@ import PokemonDetails from './src/components/PokemonDetails';
 import CreatePokemon from './src/components/CreatePokemon.jsx';
 
 
-//<NavBar/> <--- va a renderizarse en todas las paginas menos en la landing page
 function App() {
   return (
     <React.Fragment>
       <Route exact path="/" render={()=><LandingPage/>}/>
+      <Route path="/" render={()=><NavBar/>}></Route>
       <Route path="/pokemons" render={()=><Pokemons/>}/>
-      <Route path="/pokemonDetails" render={()=><PokemonDetails/>}/>
+      <Route path="/pokemonDetail/:id" render={()=><PokemonDetails/>}/>
       <Route path="/createPokemon" render={()=><CreatePokemon/>}/>
-      
     </React.Fragment>
   );
 }
