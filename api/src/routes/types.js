@@ -12,6 +12,8 @@ router.get("/types",async(req, res) => {
         const json = await response.json()
         const tiposPokemon = json.results.map((t)=>t.name)
         
+        //Se cargan mas tipos si se hace otra peticion *******************
+        
         for(let i = 0; i < tiposPokemon.length;i++){
             await Type.create({
                 name:tiposPokemon[i]
