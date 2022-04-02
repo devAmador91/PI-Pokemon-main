@@ -5,7 +5,7 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "GET_All_POKEMONS":
+    case "GET_ALL_POKEMONS":
       return {
         ...state,
         pokemonsCreatedbyUser: [...state.pokemonsCreatedbyUser, action.payload],

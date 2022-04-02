@@ -1,31 +1,35 @@
 import React, { useEffect } from "react";
 import { getPokemons } from "../actions";
-import { getAllTypes } from "../actions";
 import { connect } from 'react-redux';
 import Pokemon from "./Pokemon";
+import { Row } from "../style-components/style-Pokemons/pokemons";
+import { Column } from "../style-components/style-Pokemons/pokemons";
 
 
 
 
 import { Background } from "../style-components/styles-Pokemons/background";
 
-function Pokemons({getAllPokemons,getAllTypes},{allPokemons,allTypes}){
+function Pokemons({getAllPokemons,allPokemons}){
+
     useEffect(()=>{
         getAllPokemons();
-        getAllTypes();
-    },[]);
+    },[getAllPokemons]);
+
     return (
         <React.Fragment>
             <Background>
-            <section>
+            <Row>
+            <Column>
             {
-                //rederizar los types que tienen que conicidr con cada pokemon
+                
                allPokemons ? allPokemons.map((p)=>{
-                    return <Pokemon key={p.id} id={p.id} name={p.name} img={p.img} />
+                    return <Pokemon key={p.id} id={p.id} name={p.name} type={p.typeName} img={p.img} />
                 }) : null
             }
+            </Column>
+            </Row>
             
-            </section>
             </Background>
         </React.Fragment>
         
@@ -33,14 +37,12 @@ function Pokemons({getAllPokemons,getAllTypes},{allPokemons,allTypes}){
 }
 
 const mapStateToProps = (state) => ({
-    allPokemons: state.pokemonsCreatedbyUser,
-    allTypes: state.allTypesOfPokemons
+    allPokemons: state.pokemonsCreatedbyUser.pop(),
   });
   
   function mapDispatchToProps(dispatch) {
     return {
         getAllPokemons: ()=> dispatch(getPokemons()),
-        getAllTypes: ()=> dispatch(getAllTypes())
     }
   }
 
