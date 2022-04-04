@@ -38,6 +38,6 @@ margin-top: 5px;
 
 export const PikachuLogo = styled.img`
 width: 150px;
-transform: scaleX(-1);
+transform: scaleX(-1); //voltea la imagen horizontalmente
 margin-bottom: 30px;
 `;

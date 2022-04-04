@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getPokemons } from "../actions";
 import { connect } from "react-redux";
 import Pokemon from "./Pokemon";
-import { Row } from "../style-components/style-Pokemons/pokemons";
-import { Column } from "../style-components/style-Pokemons/pokemons";
-import { Background } from "../style-components/styles-Pokemons/background";
+import { ContainerImg } from "../style-components/styles-Pokemons/containerImg";
+import { Button } from "../style-components/styles-Pokemons/butonNext-Prev";
+import { Container } from "../style-components/styles-Pokemons/container";
+import { ContainerButton } from "../style-components/styles-Pokemons/containerButton";
+import loading from '../img/Pokemons/loading.gif'
+import { ImgLoading } from "../style-components/styles-Pokemons/imgLoading";
 
 function Pokemons({ getAllPokemons, allPokemons }) {
   const [pokemons, setPokemons] = useState([]); // primeros 12 pokemons en un arreglo de arreglos
@@ -46,22 +49,25 @@ function Pokemons({ getAllPokemons, allPokemons }) {
 
 
   return (
-    <React.Fragment>
-      <Background>
-        <Row>
-          <Column>
+    <Container>
+      <ContainerImg>
+          
             {pokemons.length ? pokemons[npage.numPage].map((p) => { 
                   return (
+                   
                     <Pokemon key={p.id} id={p.id} name={p.name} type={p.typeName} img={p.img} />
+                    
                   );
                 })
-              : null}
-          </Column>
-        </Row>
-        {npage.numPage < 3 && <button onClick={()=> setPage({...npage, nextPage: npage.nextPage + 1})}>Siguiente</button>} 
-        {npage.numPage > 0 && <button onClick={()=> setPage({...npage, nextPage: npage.nextPage - 1})}>Atras</button>}   
-      </Background>
-    </React.Fragment>
+              : <ImgLoading src={loading} alt="imagen de loading"></ImgLoading>} {/*<-- incorporar imagen de loading*/}
+              
+          
+       </ContainerImg>
+       <ContainerButton>        
+      {npage.numPage > 0 && <Button onClick={()=> setPage({...npage, nextPage: npage.nextPage - 1})}>Atras</Button>}
+      {npage.numPage < 3 && <Button onClick={()=> setPage({...npage, nextPage: npage.nextPage + 1})}>Siguiente</Button>} 
+      </ContainerButton>   
+      </Container>
   );
 }
 

@@ -7,14 +7,14 @@ import { PikachuLogo } from "../style-components/styles-NavBar/navbar";
 import { Form } from "../style-components/styles-NavBar/navbar";
 import { Input } from "../style-components/styles-NavBar/navbar";
 import { Button } from "../style-components/styles-NavBar/navbar";
-//Aqui pueden ir los enlaces con NavLink
+
 
 export default function NavBar(){
 
     return(
         <Header>
         
-            <Pokeball src={imgPokeball} alt="Loge de pokebola"/>
+           <Pokeball src={imgPokeball} alt="Loge de pokebola"/>
             <Form>
                 <Input type={"text"} name="buscadorPokemon"></Input>
                 <Button type={"submit"} value="Buscar"></Button>

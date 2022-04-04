@@ -7,4 +7,5 @@ export const BackGround = styled.div`
 	height : 100%;
     background-image: url("https://wallpapercave.com/wp/1filr9D.jpg");
     background-size: cover;
+    z-index: 1;
 `;
