@@ -6,12 +6,13 @@ const { Pokemon } = conn.models; //importar del sequelize.models los modelos a u
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
 router.get("/pokemons", async (req, res) => {
-  const { name } = req.query;
+  const { name:namePokemonQuery } = req.query;
+  console.log("BD ->>>",namePokemonQuery)
 
   try {
     const pokemonsCreatedByUser = await Pokemon.findAll(); //traemos todos los pokemos de la bd
 
-    if (!name) {
+    if (!namePokemonQuery) {
       //Enviamos todos los pokemones
 
       try {
@@ -50,12 +51,12 @@ router.get("/pokemons", async (req, res) => {
         if (pokemonsCreatedByUser.length) {
           //Si hay pokemons creados en la bd se envian tambien
           pokemonsCreatedByUser.map((p) => {
-            const { id, name, img, type } = p;
+            const { id, name, img, type:typeName } = p;
             const pokemonOfUser = {
               id,
               name,
               img,
-              type,
+              typeName,
             };
             allPokemons.unshift(pokemonOfUser);
           });
@@ -71,22 +72,29 @@ router.get("/pokemons", async (req, res) => {
       //si llega por query un nombre buscamos en la bd y en la api
 
       if (pokemonsCreatedByUser.length) {
-        let pokemonFound = pokemonsCreatedByUser.find((p) => p.name === name);
-        const { id, name, img, type } = pokemonFound;
-        return res.json({ id, name, img, type });
+        let pokemonFound = pokemonsCreatedByUser.find((p) => p.name === namePokemonQuery);
+        if(pokemonFound){
+        const { id, name, img, type:typeName } = pokemonFound;
+        return res.json({ id, name, img, typeName });
+        }
       }
-      const responseApi = await fetch(`${url}${name}`);
+
+      const responseApi = await fetch(`${url}${namePokemonQuery}`);
       const pokemonJson = await responseApi.json();
-      const { id, name: namePokemon } = pokemonJson;
+      const { id, name} = pokemonJson;
       const { front_default: img } = pokemonJson.sprites.other.dream_world;
       const typeName = [];
       pokemonJson.types.map((t) => {
         typeName.push(t.type.name);
       });
-      return res.json({ id, namePokemon, img, typeName });
+      return res.json({ id, name, img, typeName });
     } catch (error) {
       console.error(error);
-      return res.json({ msg: "El pokemon ingresado no existe" });
+      return res.status(404).json(
+        {
+         msg: "El pokemon ingresado no existe" ,
+         error: 404
+        });
     }
   } catch (error) {
     console.error(error);
@@ -125,7 +133,11 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
     return res.json(statistics);
   } catch (error) {
     console.log(error);
-    return res.status(404).send({msg:"El id no existe en la api"});
+    return res.status(404).send(
+      {
+        msg:"El id no existe en la api",
+        error: 404
+      });
   }
 });
 
@@ -137,18 +149,30 @@ router.post("/pokemons", async (req, res) => {
     if (typeof(name,img) !== "string") {
       return res
         .status(400)
-        .send({ msg: "El tipo de dato de name no es valido!!!" });
+        .send(
+          {
+             msg: "El tipo de dato de name no es valido!!!" ,
+             error: 400
+            });
     }
 
     if (typeof(height, weight, hp, attack, defense, speed) !== "number") {
-      return res.status(400).send({
+      return res.status(400).send(
+        {
         msg: "El tipo de dato de alguno de estos valores (height, weight, hp, attack, defense, speed) no es valido!!!",
-      });
+        error: 400
+        }
+      );
     }
   } else {
     return res
       .status(400)
-      .send({ msg: "Alguno de los datos enviados es nulo" });
+      .send(
+        {
+           msg: "Alguno de los datos enviados es nulo",
+           error:400
+        }
+           );
   }
 
   //Validaciones de existencia en api y bd:
@@ -159,7 +183,11 @@ router.post("/pokemons", async (req, res) => {
     const responseApi = await fetch(`${url}${name}`);
     const pokemonJson = await responseApi.json();
     if (pokemonJson) {
-      return res.status(400).send({ msg: "El nombre del pokemon ingresado ya existe" });
+      return res.status(400).send(
+        { 
+          msg: "El nombre del pokemon ingresado ya existe" ,
+          error:400
+        });
     }
   } catch (error) {
     console.log("El nombre del pokemon no existe en la api");
@@ -175,7 +203,7 @@ router.post("/pokemons", async (req, res) => {
   try {
     const [valor, booleano] = await Pokemon.findOrCreate({
       where: {
-        name,
+        name
       },
       defaults: {
         id,
@@ -198,6 +226,7 @@ router.post("/pokemons", async (req, res) => {
     }
     res.status(400).send({
       msg: "El nombre del pokemon ingresado ya existe en la base de datos",
+      error: 400
     });
   } catch (error) {
     console.error(error);
