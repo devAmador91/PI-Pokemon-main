@@ -7,11 +7,12 @@ import { Li } from "../style-components/style-Pokemon/pokemon";
 
 
 export default function Pokemon({id,name,img,type}){
+//se esta recibiendo namePokemon y typePokemon
 
     return (
         
          <StylePokemon>
-            <NavLink to={`/pokemonDetail/${id}`}><ImgPokemon src={img} alt="pokemon"></ImgPokemon></NavLink> 
+            <NavLink to={{pathname:`/pokemonDetail/${id}`, state:{name,img,type}}} ><ImgPokemon src={img} alt="pokemon" ></ImgPokemon></NavLink> 
             <div>
             <P>{name.replace(name.charAt(0),name.charAt(0).toUpperCase())}</P>
              <ul>

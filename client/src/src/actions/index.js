@@ -18,6 +18,26 @@ export function getPokemons() {
     };
   }
 
+  export const  getPokemonByName =(name)=>{
+    return async(dispatch)=>{
+      const response = await fetch(`http://localhost:3001/pokemons?name=${name}`);
+      const pokemonJson = await response.json();
+      return dispatch({type: "GET_POKEMON_BY_NAME", payload: pokemonJson})
+    }
+  }
+
+  export const  getPokemonById =(id)=>{
+    return async(dispatch)=>{
+      const response = await fetch(`${urlPokemons}${id}`);
+      const pokemonJson = await response.json();
+      return dispatch({type: "GET_POKEMON_BY_ID", payload: pokemonJson})
+    }
+  }
+
+
+
+
+
   const urlTypes = "http://localhost:3001/types"
 
   export function getAllTypes() {

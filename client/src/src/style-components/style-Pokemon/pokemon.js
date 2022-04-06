@@ -18,9 +18,11 @@ width: 80%;
 `
 
 export const P = styled.p`
+font-family: 'PokemonSolid';
 font-size: 25px;
 text-align: center;
-text-shadow: 1px 2px 1px yellow;
+
+color: #e63648;
 `
 
 export const Li = styled.li`

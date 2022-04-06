@@ -1,6 +1,9 @@
 const initialState = {
+  allPokemonsApi: [],
+  foundPokemonByName: [],
+  foundPokemonById: [],
   pokemonsCreatedbyUser: [],
-  allTypesOfPokemons: []
+  allTypesOfPokemons: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -8,13 +11,27 @@ export default function rootReducer(state = initialState, action) {
     case "GET_ALL_POKEMONS":
       return {
         ...state,
-        pokemonsCreatedbyUser: [...state.pokemonsCreatedbyUser, action.payload],
+        allPokemonsApi: [action.payload]
       };
-      case "GET_ALL_TYPES":
+
+    case "GET_POKEMON_BY_NAME":
+      return {
+        ...state,
+        foundPokemonByName: [action.payload]
+      };
+
+      case "GET_POKEMON_BY_ID":
         return{
           ...state,
-          allTypesOfPokemons: [...state.allTypesOfPokemons, action.payload]
+          foundPokemonById: [action.payload]
         }
+
+    case "GET_ALL_TYPES":
+      return {
+        ...state,
+        allTypesOfPokemons: [...state.allTypesOfPokemons, action.payload],
+      };
+
     case "CREATE_POKEMON":
       return {
         ...state,
