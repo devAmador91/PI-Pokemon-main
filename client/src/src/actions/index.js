@@ -34,10 +34,6 @@ export function getPokemons() {
     }
   }
 
-
-
-
-
   const urlTypes = "http://localhost:3001/types"
 
   export function getAllTypes() {
@@ -48,6 +44,16 @@ export function getPokemons() {
           dispatch({ type: "GET_ALL_TYPES", payload: json });
         });
     };
+  }
+
+  
+  export const createPokemon = (input)=>{
+    return async(dispatch)=>{
+      const response = await fetch(urlPokemons,
+        {method: 'POST',body:JSON.stringify(input),headers: { 'Content-Type': 'application/json' }})
+      const pokemonCreatedJson = await response.json();
+      return dispatch({type: "CREATE_POKEMON", payload: pokemonCreatedJson})
+    }
   }
 
   /*
