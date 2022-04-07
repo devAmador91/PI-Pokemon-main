@@ -7,7 +7,7 @@ const url = "https://pokeapi.co/api/v2/type"
 router.get("/types",async(req, res) => { 
  
     try {
-        
+        await Type.destroy({where:{}}) //elimmina todos los datos de la tabla para que no almacene de mas al recargar la pagina
         const response = await fetch(url)
         const json = await response.json()
         const tiposPokemon = json.results.map((t)=>t.name)
@@ -24,8 +24,7 @@ router.get("/types",async(req, res) => {
             attributes:["name"]
         })
         
-        res.send(allTypes)
-       
+        return res.send(allTypes)
 
     } catch (error) {
         res.sendFile(error)

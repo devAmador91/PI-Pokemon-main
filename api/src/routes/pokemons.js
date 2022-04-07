@@ -6,8 +6,7 @@ const { Pokemon } = conn.models; //importar del sequelize.models los modelos a u
 const url = "https://pokeapi.co/api/v2/pokemon/";
 
 router.get("/pokemons", async (req, res) => {
-  const { name:namePokemonQuery } = req.query;
-  console.log("BD ->>>",namePokemonQuery)
+  const { name:namePokemonQuery } = req.query;//no crear conflicto con el name
 
   try {
     const pokemonsCreatedByUser = await Pokemon.findAll(); //traemos todos los pokemos de la bd
@@ -142,11 +141,21 @@ router.get("/pokemons/:idPokemon", async (req, res) => {
 });
 
 router.post("/pokemons", async (req, res) => {
-  const { name, height, weight, hp, attack, defense, speed, img } = req.body;
+  const { name,type, height, weight, hp, attack, defense, speed, img } = req.body;
   //Validaciones de tipos de datos:
 
-  if (name && height && weight && hp && attack && defense && speed && img) {
+  if (name && type && height && weight && hp && attack && defense && speed && img) {
     if (typeof(name,img) !== "string") {
+      return res
+        .status(400)
+        .send(
+          {
+             msg: "El tipo de dato de name o de img no es valido!!!" ,
+             error: 400
+            });
+    }
+
+    if(!Array.isArray(type)){
       return res
         .status(400)
         .send(
