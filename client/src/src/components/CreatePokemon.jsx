@@ -1,8 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllTypes } from "../actions";
 import { createPokemon } from "../actions";
+import { Container } from "../style-components/style-CreatPokemon/container";
+import { Border } from "../style-components/style-CreatPokemon/container";
+import { H1 } from "../style-components/style-CreatPokemon/container";
+import { ContainerButton } from "../style-components/style-CreatPokemon/container";
+import { Button } from "../style-components/style-CreatPokemon/container";
+import { DeleteButton } from "../style-components/style-CreatPokemon/container";
+import { Label } from "../style-components/style-CreatPokemon/container";
+import { LabelNum } from "../style-components/style-CreatPokemon/container";
+import { ContainerInput } from "../style-components/style-CreatPokemon/container";
+import { Hp } from "../style-components/style-CreatPokemon/container";
+import { ButtonCreate } from "../style-components/style-CreatPokemon/container";
+import { P } from "../style-components/style-CreatPokemon/container";
 
 export default function CreatePokemon() {
     
@@ -22,10 +34,17 @@ export default function CreatePokemon() {
     const allTypes = useSelector((state)=> state.allTypesOfPokemons)
     const pokemonCreated = useSelector((state)=> state.pokemonsCreatedbyUser)
     const history = useHistory();
+    //const copyPokemonCreated = useRef();
 
     useEffect(()=>{
         dispatch(getAllTypes())
     },[dispatch])
+
+    /*useEffect(()=>{//Pendiente arreglar el aviso de creacion de pokemon
+        if(pokemonCreated.length){
+        copyPokemonCreated.current = pokemonCreated.map((p)=>p)
+        }
+    },[pokemonCreated])*/
     
     const handleChange = (e) => {
         let event = e.target.value //convierto al tipo requerido por la BD
@@ -55,68 +74,90 @@ export default function CreatePokemon() {
     }
     console.log(pokemonCreated) //se crea al pokemon sin tomar en cuenta el tipo de este
     return (
-        <React.Fragment>
-            <h1>Crea tu Pokemon</h1>
+        <Container>
+            <Border>
+            <H1>Create your Pokemon</H1>
             <form onSubmit={(e)=>handleSubmit(e)}>
-
-                <label>Name: </label>
+                <ContainerInput>
+                <Label>Name: </Label>
                 <input type={"text"} name="name" value={input.name} onChange={(e)=>handleChange(e)}></input>
+                </ContainerInput>
 
                 <br />
 
-                <label>Type: </label>
+                <ContainerInput>
+                <Label>Type: </Label>
                 <select name="select" onChange={(e)=>addType(e)}>
                     {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
                 </select>
-
+                </ContainerInput>
+                {input.type.length ? input.type.map((t)=><DeleteButton key={t} onClick={(e)=>deleteType(e)}>{t}</DeleteButton>) : null}
                 <br />
 
-                <label>Height: </label>
+                <ContainerInput>
+                <Label>Height: </Label>
                 <input type="range" name="height" min="1" max="100" step="1" value={input.height} onChange={(e) => handleChange(e)}></input>
-                <label>{input.height}</label>
+                <LabelNum>{input.height}</LabelNum>
+                </ContainerInput>
 
                 <br />
 
-                <label>Weight: </label>
+                <ContainerInput>
+                <Label>Weight: </Label>
                 <input type="range" name="weight" min="1" max="100" step="1" value={input.weight} onChange={(e) => handleChange(e)}></input>
-                <label>{input.weight}</label>
+                <LabelNum>{input.weight}</LabelNum>
+                </ContainerInput>    
 
                 <br />
 
-                <label>Hp: </label>
+                <ContainerInput>
+                <Hp>Hp: </Hp>
                 <input type="range" name="hp" min="1" max="100" step="1" value={input.hp} onChange={(e) => handleChange(e)}></input>
-                <label>{input.hp}</label>
+                <LabelNum>{input.hp}</LabelNum>
+                </ContainerInput>
 
                 <br />    
-
-                <label>Defense: </label>
+                <ContainerInput>
+                <Label>Defense: </Label>
                 <input type="range" name="defense" min="1" max="100" step="1" value={input.defense} onChange={(e) => handleChange(e)}></input>
-                <label>{input.defense}</label>
+                <LabelNum>{input.defense}</LabelNum>
+                </ContainerInput>
 
                 <br />
 
-                <label>Attack: </label>
+                <ContainerInput>
+                <Label>Attack: </Label>
                 <input type="range" name="attack" min="1" max="100" step="1" value={input.attack} onChange={(e) => handleChange(e)}></input>
-                <label>{input.attack}</label>
+                <LabelNum>{input.attack}</LabelNum>
+                </ContainerInput>
 
                 <br />
 
-                <label>Speed: </label>
+                <ContainerInput>
+                <Label>Speed: </Label>
                 <input type="range" name="speed" min="1" max="100" step="1" value={input.speed} onChange={(e) => handleChange(e)}></input>
-                <label>{input.speed}</label>
+                <LabelNum>{input.speed}</LabelNum>
+                </ContainerInput>
 
                 <br />
-
-                <label>Picture: </label>
+                <ContainerInput>    
+                <Label>Picture: </Label>
                 <input type={"text"} name="img" value={input.img} onChange={(e)=>handleChange(e)}></input>
-                <input type={"submit"} value="Crear Pokemón"/>
+                <br/>
+                <ButtonCreate type={"submit"} value="Crear Pokemón"/>
+                {pokemonCreated.length && <P>{pokemonCreated[0].msg}</P>}
+                </ContainerInput>
+               
 
             </form>
-            {input.type.length ? input.type.map((t)=><button key={t} onClick={(e)=>deleteType(e)}>{t}</button>) : null}
-
-            <br />
-            <button onClick={()=>history.push("/pokemons")}>Home</button>
-        </React.Fragment>
+           
+            </Border>
+            <ContainerButton>
+            <Button onClick={()=>{history.push("/pokemons")}}>Home</Button>{/*No recarga al regresar al home, el pokemon creado */}
+            </ContainerButton>
+          
+            
+        </Container>
 
     )
 }

@@ -15,7 +15,7 @@ export default function LandingPage(){
             <PokemonGlobalCss/>
             <NavLink to="/pokemons"><Pokeball src={pokeballImg}></Pokeball></NavLink>
             <br></br>
-            <StyledText to="/pokemons"><h3>Entrar</h3></StyledText>
+            <StyledText to="/pokemons"><h3>Start</h3></StyledText>
             </BackGround>
             
         </React.Fragment>

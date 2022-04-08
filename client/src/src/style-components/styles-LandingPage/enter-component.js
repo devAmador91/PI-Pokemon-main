@@ -6,7 +6,7 @@ export const Pokeball = styled.img`
 width: 150px;
 margin-top: 230px;
 margin-left: 250px;
-margin-bottom: 0px;
+margin-bottom: 10px;
 cursor: pointer;
 &:hover{
     animation: rotation 300ms linear;

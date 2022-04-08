@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+
+export const ContainerHeader = styled.div`
+    background-color: #181a1b;
+`;
 
 export const Header = styled.header`
 display: flex;
@@ -12,7 +17,7 @@ border-bottom: 5px solid #9e8c37;
 `;
 
 export const Input = styled.input`
-width: 1200px;
+width: 1150px;
 border-radius: 60px;
 border-color:  red;
 background-color: red;
@@ -40,4 +45,9 @@ export const PikachuLogo = styled.img`
 width: 150px;
 transform: scaleX(-1); //voltea la imagen horizontalmente
 margin-bottom: 30px;
+`;
+
+export const Link = styled(NavLink)`
+text-decoration: none;
+color: yellow;
 `;

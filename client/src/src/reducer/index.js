@@ -1,6 +1,6 @@
 const initialState = {
   allPokemonsApi: [],
-  foundPokemonByName: [],
+  foundPokemonByName:{data:undefined},
   foundPokemonById: {},
   allTypesOfPokemons: [],
   pokemonsCreatedbyUser: []
@@ -16,8 +16,10 @@ export default function rootReducer(state = initialState, action) {
 
     case "GET_POKEMON_BY_NAME":
       return {
-        ...state,
-        foundPokemonByName: [action.payload]
+        ...state,//Setear el estado una vez encontrado un pokemon
+        foundPokemonByName:action.payload.hasOwnProperty("data")  ?
+        {...state.foundPokemonByName,data:undefined} :
+        {...state.foundPokemonByName,data:action.payload}
       };
 
       case "GET_POKEMON_BY_ID":
@@ -35,7 +37,7 @@ export default function rootReducer(state = initialState, action) {
     case "CREATE_POKEMON":
       return {
         ...state,
-        pokemonsCreatedbyUser: [...state.pokemonsCreatedbyUser, action.payload],
+        pokemonsCreatedbyUser: [action.payload],
       };
 
     default:

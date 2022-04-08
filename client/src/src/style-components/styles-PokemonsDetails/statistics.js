@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Background = styled.div`
-    background-color: black;
+    background-color: #181a1b;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,4 +23,13 @@ export const H1 = styled.h1`
     color: red;
     font-family: 'PokemonSolid';
 `;
+
+export const Button = styled.button`
+width: 100px;
+color: black;
+background-color: yellow;
+font-size: 15px;
+border-radius: 30px;
+border: 4px solid black;
+`
 

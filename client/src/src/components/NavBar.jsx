@@ -9,8 +9,8 @@ import { Input } from "../style-components/styles-NavBar/navbar";
 import { Button } from "../style-components/styles-NavBar/navbar";
 import { useDispatch } from "react-redux";
 import { getPokemonByName } from "../actions";
-import { NavLink } from "react-router-dom";
-
+import { Link } from "../style-components/styles-NavBar/navbar";
+import { ContainerHeader } from "../style-components/styles-NavBar/navbar";
 
 export default function NavBar(){
 
@@ -21,34 +21,29 @@ export default function NavBar(){
         setInput({name:e.target.value})
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async(e)=>{
         e.preventDefault()
-        dispatch(getPokemonByName(input.name))
+        await dispatch(getPokemonByName(input.name))
+        dispatch(getPokemonByName("setear"))
         setInput({name: ""})
     }
 
 
 
     return(
-        <Header>
+        <ContainerHeader>
+            <Header>
         
-           <Pokeball src={imgPokeball} alt="Loge de pokebola"/>
-            <Form onSubmit={(e)=>handleSubmit(e)}>
-                <Input type={"search"} name="buscadorPokemon" value={input.name} onChange={(e)=>handleChange(e)}></Input>
-                <Button type={"submit"} value="Buscar"></Button>
-            </Form>
+                <Pokeball src={imgPokeball} alt="Loge de pokebola"/>
+                <Form onSubmit={(e)=>handleSubmit(e)}>
+                    <Input type={"search"} name="buscadorPokemon" value={input.name} onChange={(e)=>handleChange(e)}></Input>
+                    <Button type={"submit"} value="Buscar"></Button>
+                </Form>
             
-            <PikachuLogo src={imgPikachuLogo} alt="logo de pikachu" />
-            <NavLink to={"/createPokemon"}>Create your Pokemon</NavLink>
-        </Header>
-        
+                <PikachuLogo src={imgPikachuLogo} alt="logo de pikachu" />
+                <Link to={"/createPokemon"}>Create your Pokemon</Link>
+            </Header>
+           
+        </ContainerHeader>
     )
 }
-
-
-/*
-<nav>
-                <NavLink>Home</NavLink>
-                <NavLink>Crear Pokemon</NavLink>
-            </nav>
-*/
