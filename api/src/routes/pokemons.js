@@ -33,6 +33,7 @@ router.get("/pokemons", async (req, res) => {
             const pokemonJson = await response2Api.json();
             const { id, name } = pokemonJson;
             const { front_default } = pokemonJson.sprites.other.dream_world;
+            const hp = pokemonJson.stats[0].base_stat
             const typeName = [];
             pokemonJson.types.map((t) => {
               typeName.push(t.type.name);
@@ -41,6 +42,7 @@ router.get("/pokemons", async (req, res) => {
             const pokemonDetails = {
               id,
               name,
+              hp,
               img: front_default,
               typeName,
             };
@@ -76,6 +78,10 @@ router.get("/pokemons", async (req, res) => {
         const { id, name, img, type:typeName } = pokemonFound;
         return res.json({ id, name, img, typeName });
         }
+      }
+
+      if(namePokemonQuery === "setear"){//setea el estado una vez encontrado un pokemon
+        return res.send({data:0})
       }
 
       const responseApi = await fetch(`${url}${namePokemonQuery}`);
@@ -224,6 +230,7 @@ router.post("/pokemons", async (req, res) => {
         weight,
         height,
         img,
+        type
       },
     });
 
