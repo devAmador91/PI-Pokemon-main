@@ -7,6 +7,7 @@ import { Statistics } from "../style-components/styles-PokemonsDetails/statistic
 import { Img } from "../style-components/styles-PokemonsDetails/statistics";
 import { H1 } from "../style-components/styles-PokemonsDetails/statistics";
 import { Button } from "../style-components/styles-PokemonsDetails/statistics";
+import { Container } from "../style-components/styles-PokemonsDetails/statistics";
 
 export default function PokemonDetails(){
 
@@ -25,7 +26,7 @@ export default function PokemonDetails(){
    
 
     return (
-        <React.Fragment>
+        <Container>
         <Background>
             <Statistics>
             <H1>{name.replace(name.charAt(0),name.charAt(0).toUpperCase())}</H1>
@@ -38,8 +39,10 @@ export default function PokemonDetails(){
             <h4>Numero de Pokemon: {id}</h4>
             </Statistics>
             <Img src={img}></Img>
+
+            
         </Background>
         <Button onClick={()=>history.push("/pokemons")}>Atras</Button>
-        </React.Fragment>
+        </Container>
     )
 }

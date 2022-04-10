@@ -5,4 +5,5 @@ export const ContainerButton = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
+background-color: #181a1b;
 `;

@@ -29,8 +29,8 @@ text-decoration: none;
 export const PokemonGlobalCss = createGlobalStyle`
 *{
   margin: 0px;
-  background-color: black;
 }
+
 
 h3{
 display: inline-block;

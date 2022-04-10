@@ -9,16 +9,20 @@ import { Input } from "../style-components/styles-NavBar/navbar";
 import { Button } from "../style-components/styles-NavBar/navbar";
 import { useDispatch } from "react-redux";
 import { getPokemonByName } from "../actions";
-import { Link } from "../style-components/styles-NavBar/navbar";
 import { ContainerHeader } from "../style-components/styles-NavBar/navbar";
+import { Error } from "../style-components/style-CreatPokemon/container";
+import { validate } from "./FunctionNavBar/validateInput";
+import { Link } from "react-router-dom";
 
 export default function NavBar(){
 
     const [input, setInput] = useState({name: ""});
+    const [errors, setErrors] = useState({})
     const dispatch = useDispatch()
 
     const handleChange = (e)=>{
         setInput({name:e.target.value})
+        setErrors(validate(input))
     }
 
     const handleSubmit = async(e)=>{
@@ -28,20 +32,21 @@ export default function NavBar(){
         setInput({name: ""})
     }
 
-
-
     return(
         <ContainerHeader>
             <Header>
         
-                <Pokeball src={imgPokeball} alt="Loge de pokebola"/>
+                <Link to={"/pokemons"}><Pokeball src={imgPokeball} alt="Loge de pokebola"/></Link>
                 <Form onSubmit={(e)=>handleSubmit(e)}>
                     <Input type={"search"} name="buscadorPokemon" value={input.name} onChange={(e)=>handleChange(e)}></Input>
-                    <Button type={"submit"} value="Buscar"></Button>
+                    {Object.keys(errors).length === 0 && <Button type={"submit"} value="Buscar"></Button>}
+                    <br/>
+                    {errors.name && <Error>{errors.name}</Error>}
+                    
                 </Form>
             
                 <PikachuLogo src={imgPikachuLogo} alt="logo de pikachu" />
-                <Link to={"/createPokemon"}>Create your Pokemon</Link>
+
             </Header>
            
         </ContainerHeader>

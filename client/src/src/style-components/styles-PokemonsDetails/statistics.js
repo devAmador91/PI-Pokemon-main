@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+background-color: #181a1b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100vw;
+    height:100vh; 
+`;
+
 export const Background = styled.div`
     background-color: #181a1b;
     display: flex;
@@ -16,6 +25,7 @@ export const Statistics = styled.div`
 export const Img = styled.img`
     width: 300px;
     margin-left: 200px;
+    margin-top: 100px;
 `;
 
 export const H1 = styled.h1`
@@ -31,5 +41,6 @@ background-color: yellow;
 font-size: 15px;
 border-radius: 30px;
 border: 4px solid black;
+margin-top: 50px;
 `
 

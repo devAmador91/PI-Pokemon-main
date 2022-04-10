@@ -85,3 +85,7 @@ font-size: 20px;
 export const P = styled.p`
 color:red;
 `;
+
+export const Error = styled.p`
+color: red;
+`;

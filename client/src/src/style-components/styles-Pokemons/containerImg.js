@@ -12,4 +12,5 @@ export const ContainerImg = styled.div`
     flex-wrap: wrap;
     padding: 20px;
     justify-content: center;
+    background-color: #181a1b;
 `

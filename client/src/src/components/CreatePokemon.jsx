@@ -15,6 +15,8 @@ import { ContainerInput } from "../style-components/style-CreatPokemon/container
 import { Hp } from "../style-components/style-CreatPokemon/container";
 import { ButtonCreate } from "../style-components/style-CreatPokemon/container";
 import { P } from "../style-components/style-CreatPokemon/container";
+import { validate } from "./FunctionCreatePokemon/ValidationForm";
+import { Error } from "../style-components/style-CreatPokemon/container";
 
 export default function CreatePokemon() {
     
@@ -29,6 +31,7 @@ export default function CreatePokemon() {
         speed: 0,
         img: ""
     })
+    const [errors, setErrors] = React.useState({});
 
     const dispatch = useDispatch()
     const allTypes = useSelector((state)=> state.allTypesOfPokemons)
@@ -55,6 +58,7 @@ export default function CreatePokemon() {
             ...input,
             [e.target.name]: event
         })
+        setErrors(validate({...input,[e.target.name]: event}))
     }
 
     const handleSubmit = (e) => {
@@ -66,13 +70,15 @@ export default function CreatePokemon() {
     const addType = (e)=>{//busco si el tipo ya existe y si no agrego uno
         if(!input.type.includes(e.target.value)){
             setInput((i)=>{return{...i,type:[...i.type,e.target.value]}})
+            setErrors(validate({...input,type: e.target.value}))
         }
     }
 
     const deleteType = (e)=>{
        setInput((i)=>{return{...i,type:i.type.filter((nameType)=> nameType !== e.target.innerText)}})
+       setErrors(validate({...input,type: e.target.value}))
     }
-    console.log(pokemonCreated) //se crea al pokemon sin tomar en cuenta el tipo de este
+
     return (
         <Container>
             <Border>
@@ -80,7 +86,8 @@ export default function CreatePokemon() {
             <form onSubmit={(e)=>handleSubmit(e)}>
                 <ContainerInput>
                 <Label>Name: </Label>
-                <input type={"text"} name="name" value={input.name} onChange={(e)=>handleChange(e)}></input>
+                <input type={"text"} name="name" value={input.name} onChange={(e)=>handleChange(e)}></input><br/>
+                {errors.name && <Error>{errors.name}</Error>}
                 </ContainerInput>
 
                 <br />
@@ -90,53 +97,61 @@ export default function CreatePokemon() {
                 <select name="select" onChange={(e)=>addType(e)}>
                     {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
                 </select>
+                <br/>
+                {errors.type && <Error>{errors.type}</Error>}
                 </ContainerInput>
                 {input.type.length ? input.type.map((t)=><DeleteButton key={t} onClick={(e)=>deleteType(e)}>{t}</DeleteButton>) : null}
                 <br />
 
                 <ContainerInput>
                 <Label>Height: </Label>
-                <input type="range" name="height" min="1" max="100" step="1" value={input.height} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.height}</LabelNum>
+                <input type="range" name="height" min="1" max="200" step="1" value={input.height} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.height}</LabelNum><br/>
+                {errors && <Error>{errors.height}</Error>}
                 </ContainerInput>
 
                 <br />
 
                 <ContainerInput>
                 <Label>Weight: </Label>
-                <input type="range" name="weight" min="1" max="100" step="1" value={input.weight} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.weight}</LabelNum>
+                <input type="range" name="weight" min="1" max="200" step="1" value={input.weight} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.weight}</LabelNum><br/>
+                {errors && <Error>{errors.weight}</Error>}
                 </ContainerInput>    
 
                 <br />
 
                 <ContainerInput>
                 <Hp>Hp: </Hp>
-                <input type="range" name="hp" min="1" max="100" step="1" value={input.hp} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.hp}</LabelNum>
+                <input type="range" name="hp" min="1" max="200" step="1" value={input.hp} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.hp}</LabelNum><br/>
+                {errors && <Error>{errors.hp}</Error>}
                 </ContainerInput>
 
                 <br />    
                 <ContainerInput>
                 <Label>Defense: </Label>
-                <input type="range" name="defense" min="1" max="100" step="1" value={input.defense} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.defense}</LabelNum>
+                <input type="range" name="defense" min="1" max="200" step="1" value={input.defense} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.defense}</LabelNum><br/>
+                {errors && <Error>{errors.defense}</Error>}
                 </ContainerInput>
 
                 <br />
 
                 <ContainerInput>
                 <Label>Attack: </Label>
-                <input type="range" name="attack" min="1" max="100" step="1" value={input.attack} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.attack}</LabelNum>
+                <input type="range" name="attack" min="1" max="200" step="1" value={input.attack} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.attack}</LabelNum><br/>
+                {errors && <Error>{errors.attack}</Error>}
                 </ContainerInput>
 
                 <br />
 
                 <ContainerInput>
                 <Label>Speed: </Label>
-                <input type="range" name="speed" min="1" max="100" step="1" value={input.speed} onChange={(e) => handleChange(e)}></input>
-                <LabelNum>{input.speed}</LabelNum>
+                <input type="range" name="speed" min="1" max="200" step="1" value={input.speed} onChange={(e) => handleChange(e)}></input>
+                <LabelNum>{input.speed}</LabelNum><br/>
+                {errors && <Error>{errors.speed}</Error>}
                 </ContainerInput>
 
                 <br />
@@ -144,7 +159,9 @@ export default function CreatePokemon() {
                 <Label>Picture: </Label>
                 <input type={"text"} name="img" value={input.img} onChange={(e)=>handleChange(e)}></input>
                 <br/>
-                <ButtonCreate type={"submit"} value="Crear Pokemón"/>
+                {errors.img && <Error>{errors.img}</Error>}
+
+                {Object.keys(errors).length === 0 && <ButtonCreate id="buttonCreatePokemon" type={"submit"} value="Crear Pokemón"/>}
                 {pokemonCreated.length && <P>{pokemonCreated[0].msg}</P>}
                 </ContainerInput>
                

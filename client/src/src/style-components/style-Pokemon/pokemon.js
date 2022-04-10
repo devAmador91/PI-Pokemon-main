@@ -6,6 +6,10 @@ export const StylePokemon = styled.div`
    border-radius: 30px;
    margin: 10px;
    width: 13%;
+   background-color: black;
+   &:hover{
+      background-color: yellow;
+   }
 `;
 
 export const ImgPokemon = styled.img`
@@ -27,5 +31,6 @@ color: #e63648;
 
 export const Li = styled.li`
 font-size: 15px;
-color: yellow;
+color: red;
+font-size: 20px;
 `;
