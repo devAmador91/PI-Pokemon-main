@@ -22,76 +22,51 @@ import { paginationNext } from "./FunctionsPokemons/functionPagination";
 import { paginationPrev } from "./FunctionsPokemons/functionPagination";
 import { Link } from "../style-components/styles-Pokemons/containerOptions";
 import { P } from "../style-components/styles-Pokemons/containerOptions";
+import { structurePage } from "./FunctionsPokemons/functionStructure";
+import { buttonPrev } from "./FunctionsPokemons/functionButtonPrev";
 
 
-
-
-function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes}) { //renderizar al pokemon encontrado
-  const [pokemons, setPokemons] = useState([]); // primeros 12 pokemons en un arreglo de arreglos
-  const [npage, setPage] = useState({ //guarda el numero de las paginas a renderizar
-      numPage : 0
-  });
-  let copiaDePokemons = useRef();//permite hacer una copia de todos los pokemons para utilizarlo con shift
+function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes}) {
+  //Estados
+  const [pokemons, setPokemons] = useState([]);
+  const [npage, setPage] = useState({numPage : 0});
+  //Flags
+  let copyPokemons = useRef();//permite hacer una copia de todos los pokemons para utilizarlo con shift
   let homeReturn = useRef();//permite retornar al home seteando el numPage
   let buttonBackFilterType = useRef();//permite aparecer el boton atras cuando se filtran pokemones por tipo
   let buttonBackFilterCreated = useRef();// permite aparecer el boton de atras cuando se filtra por creacion deusuario
   let history = useHistory();
  
+  //Efectos Secundarios
   useEffect(()=>{
-    console.log("UseEffect Seteo de variables useRef")
+  //flags para los botones
     homeReturn.current = false;
     buttonBackFilterType.current = false;
     buttonBackFilterCreated.current = false;
   },[])
-
+  //Obtener todos los pokemons de la api y todos los tipos de la BD
   useEffect(() => {
-    console.log("UseEffect Obtener Pokemons y Types de la API")
     getAllPokemons();
     getTypes();
   }, [getAllPokemons,getTypes]);
 
+  //Obtener al pokemon especificado por su nombre  
   useEffect(() =>{
-    console.log("UseEffect NavBar Busqueda Nombre")
     PokemonByName.data && PokemonByName.data.hasOwnProperty("error") && history.push("/notfound")
     PokemonByName.data && setPokemons((p)=>[[PokemonByName.data]])
   },[PokemonByName,history])
 
-  useEffect(()=>{
-    console.log("Carga Pokemons, y el Return al Home")
-    if(!pokemons.length){//Para cargar todos los pokemons de vuelta cuando se aprieta el boton atras(se carga el que sigue en la posicion del array)
-      copiaDePokemons.current = allPokemons && allPokemons.map((p)=>p)
-
-        if(homeReturn.current){//evita el loop de renderizados cuando se retorna al home
-          homeReturn.current = false;
-          buttonBackFilterType.current = false;
-          setPage({...npage,numPage:0}) //setea el paginado a cero
-         }
-
-        if(buttonBackFilterCreated.current){
-          buttonBackFilterCreated.current = false;
-        }
-
-    }
-  },[pokemons,npage,allPokemons])
-
+  //Crea la esructura de la pagina de 12 pokemons en cada una  
   useEffect(() => {
-    console.log("UseEffect Push de a 12 Pokemons por Pagina")
-    console.log(copiaDePokemons)
-    let page = [];
-    if(pokemons.length < 5){//control de las renderizaciones por dependencias (solo 4 paginas)
-     
-    for (let i = 0; i < 12; i++) {// [[],[],[],[]] <--- Cada array es una pagina con 12 pokemons
-        (copiaDePokemons.current && copiaDePokemons.current.length) && page.push(copiaDePokemons.current.shift())
-    }
-    page.length && setPokemons(p=>[...p,page]);
- console.log(pokemons)
-  } 
+      structurePage(pokemons,copyPokemons,setPokemons,allPokemons,buttonBackFilterCreated)
   }, [allPokemons, pokemons]); 
+
+
   
   return (
     <Container>
 
-      {npage.numPage < 1 && <ContainerOptions>{/*solo carga las opciones en el home */}
+           {npage.numPage < 1 && <ContainerOptions>
            <ContainerInput>
                 <select name="select" onChange={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}}>
                     {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name} >{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
@@ -106,63 +81,50 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
            <Link to={"/createPokemon"}><P>Create your Pokemon</P></Link>
 
            <ContainerInput>
-                <input type="radio" name="showOrder" value={"showOrderAlfabetic"} onClick={()=>{orderAlphabetically(allPokemons,setPokemons)}}></input><Label >Order A-Z</Label> <br/>
-                <input type="radio" name="showOrder" value={"showOrderReverse"} onClick={()=>{orderReverse(allPokemons,setPokemons)}}></input><Label >Order Z-A</Label>
+                <input type="radio" name="showOrder" value={"showOrderAlfabetic"} onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order A-Z</Label> <br/>
+                <input type="radio" name="showOrder" value={"showOrderReverse"} onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order Z-A</Label>
            </ContainerInput>
 
            <ContainerInput>
-           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceAsc(allPokemons,setPokemons)}}></input><Label >Order by force Asc</Label><br/>
-           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceDes(allPokemons,setPokemons)}}></input><Label >Order by force Des</Label>
+           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Asc</Label><br/>
+           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Des</Label>
            </ContainerInput>
 
 
       </ContainerOptions>}
 
       <ContainerImg>
-          {/*si hay 12 utiliza numPage si hay uno devuelve el cero (busqueda por nombre en otras paginas se resuelve*/}
+          {/*si en pokemons existe solo 1 pokemon se renderiza la posicion cero, si no se renderiza en la posicion que este la pag*/}
             {pokemons.length ? pokemons[pokemons[0].length === 1 ? 0 : npage.numPage].map((p) => { 
-                  return (
-                   
-                    <Pokemon key={p.id} id={p.id} name={p.name} type={p.typeName} img={p.img} />
-                    
-                  );
+                  return (<Pokemon key={p.id} id={p.id} name={p.name} type={p.typeName} img={p.img} />);
                 })
-              : <ImgLoading src={loading} alt="imagen de loading"></ImgLoading>} 
-              
-          
+                             : <ImgLoading src={loading} alt="imagen de loading"></ImgLoading>} 
        </ContainerImg>
 
        <ContainerButton>
          {/*cuando se busca por nombre ,aparece el boton atras*/}
-      {(pokemons.length && pokemons[0].length === 1) && <Button onClick={()=>{
-        //desmarca el boton radio de Pokemon created by user caundo se retorna a la pagina home en caso de ser 1
-        document.querySelector('input[type=radio][name=showPokemons]:checked').checked = false;
-        document.querySelector('input[id=showAll][type=radio][name=showPokemons]').checked = true;
-        homeReturn.current = true;
-        setPokemons([])}}>Atras</Button>
+      {(pokemons.length && pokemons[0].length === 1) && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>
         } 
+
         {/*cuando se busca por createdByUser ,aparece el boton atras*/}
-      {/*desmarca el boton radio de Pokemon created by user caundo se retorna a la pagina home en caso de ser > 1*/}
-      {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterCreated.current && <Button onClick={()=>{
-        document.querySelector('input[type=radio][name=showPokemons]:checked').checked = false;
-        document.querySelector('input[id=showAll][type=radio][name=showPokemons]').checked = true;
-        homeReturn.current = true;
-        setPokemons([])}}>Atras</Button>}
+      {(pokemons.length && pokemons[0].length > 1) && buttonBackFilterCreated.current && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>}
+        
       {/*Cuando se pasa a la paguina siguiente aparece el boton atras */}
       {(pokemons.length && pokemons[0].length > 1) && npage.numPage > 0 && <Button onClick={()=> paginationPrev(npage,setPage)}>Atras</Button>}
+      
       {/*boton siguiente */}    
       {(pokemons.length && pokemons[0].length > 1) && (npage.numPage < 3 && !buttonBackFilterType.current) && !buttonBackFilterCreated.current && <Button onClick={()=> paginationNext(npage,setPage)}>Siguiente</Button>} 
+      
       {/*cuando se busca pot type aparece el boton atras */}
-      {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterType.current &&  <Button onClick={()=>{
-        homeReturn.current = true;
-        setPokemons([])}}>Atras</Button>}
+      {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterType.current &&  <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>}
       </ContainerButton>   
+     
       </Container>
   );
 }
 
 const mapStateToProps = (state) => ({
-  allPokemons: state.allPokemonsApi[0],
+  allPokemons: state.allPokemonsApi,
   PokemonByName: state.foundPokemonByName,
   allTypes: state.allTypesOfPokemons
 });

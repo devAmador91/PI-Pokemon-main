@@ -12,13 +12,14 @@ import { getPokemonByName } from "../actions";
 import { ContainerHeader } from "../style-components/styles-NavBar/navbar";
 import { Error } from "../style-components/style-CreatPokemon/container";
 import { validate } from "./FunctionNavBar/validateInput";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function NavBar(){
 
     const [input, setInput] = useState({name: ""});
-    const [errors, setErrors] = useState({})
-    const dispatch = useDispatch()
+    const [errors, setErrors] = useState({});
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleChange = (e)=>{
         setInput({name:e.target.value})
@@ -30,6 +31,7 @@ export default function NavBar(){
         await dispatch(getPokemonByName(input.name))
         dispatch(getPokemonByName("setear"))
         setInput({name: ""})
+        history.push("/pokemons")
     }
 
     return(

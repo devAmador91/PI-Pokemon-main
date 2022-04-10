@@ -11,12 +11,12 @@ export default function rootReducer(state = initialState, action) {
     case "GET_ALL_POKEMONS":
       return {
         ...state,
-        allPokemonsApi: [action.payload]
+        allPokemonsApi: action.payload
       };
 
     case "GET_POKEMON_BY_NAME":
       return {
-        ...state,//Setear el estado una vez encontrado un pokemon
+        ...state,//Setear el estado una vez encontrado un pokemon evita un loop infinito
         foundPokemonByName:action.payload.hasOwnProperty("data")  ?
         {...state.foundPokemonByName,data:undefined} :
         {...state.foundPokemonByName,data:action.payload}
