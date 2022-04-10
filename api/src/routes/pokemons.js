@@ -17,7 +17,7 @@ router.get("/pokemons", async (req, res) => {
       try {
         let urlNext = url;
         let urlPokemons = []; // direcciones de los 40 pokemones
-        while (urlPokemons.length < 40) {
+        while (urlPokemons.length < 40) {//limite establecido por el proyecto
           const responseApi = await fetch(urlNext);
           const apiJson = await responseApi.json();
           apiJson.results.map((p) => {
@@ -29,8 +29,8 @@ router.get("/pokemons", async (req, res) => {
         const allPokemons = await Promise.all(
           //Se utiliza Promise all para resolver las promesas que devuelve el map de manera paralela
           urlPokemons.map(async (pokemon) => {
-            const response2Api = await fetch(pokemon);
-            const pokemonJson = await response2Api.json();
+            const responseApi = await fetch(pokemon);
+            const pokemonJson = await responseApi.json();
             const { id, name } = pokemonJson;
             const { front_default } = pokemonJson.sprites.other.dream_world;
             const hp = pokemonJson.stats[0].base_stat
@@ -109,9 +109,9 @@ router.get("/pokemons", async (req, res) => {
 
 router.get("/pokemons/:idPokemon", async (req, res) => {
   const { idPokemon } = req.params;
-  //preguntar a la bd si tiene pokemones
-  console.log(idPokemon)
 
+
+  //preguntar a la bd si tiene pokemones
   try {
       const pokemonsCreatedByUser = await Pokemon.findByPk(idPokemon)
       if(pokemonsCreatedByUser){
@@ -210,7 +210,7 @@ router.post("/pokemons", async (req, res) => {
 
   //Buscar el nombre ingresado en la bd y si no existe crearlo
 
-  //Crear un id unico a partir del nombre
+  //Crear un id unico a partir del nombre utilizando el buffer
 
   id = new Buffer.from(name).toString("base64")
   
