@@ -19,7 +19,7 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const PORT = 
+
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {//cambiar cuando se deploye
   server.listen(process.env.PORT || 3001, () => {
