@@ -98,7 +98,7 @@ export default function CreatePokemon() {
                     {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
                 </select>
                 <br/>
-                {errors.type && <Error>{errors.type}</Error>}
+                {!input.type.length && errors.type && <Error>{errors.type}</Error>}
                 </ContainerInput>
                 {input.type.length ? input.type.map((t)=><DeleteButton key={t} onClick={(e)=>deleteType(e)}>{t}</DeleteButton>) : null}
                 <br />

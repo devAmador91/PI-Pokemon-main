@@ -1,16 +1,12 @@
-//Aqui es donde se hace la conexion del front con el backend
+import dotenv from 'dotenv';
+dotenv.config();
 
-/*
-export function createPokemon(payload){
-    return {type: "GET_POKEMONS", payload: info}
-}
-*/
-
-const urlPokemons = "http://localhost:3001/pokemons/"
+const urlBack = process.env.REACT_APP_API;
+const urlLocal = "http://localhost:3001/"
 
 export function getPokemons() {
     return function(dispatch) {
-      return fetch(urlPokemons)
+      return fetch(`${urlBack || urlLocal}pokemons/`)
         .then(response => response.json())
         .then(json => {
           dispatch({ type: "GET_ALL_POKEMONS", payload: json });
@@ -20,7 +16,7 @@ export function getPokemons() {
 
   export const  getPokemonByName =(name)=>{
     return async(dispatch)=>{
-      const response = await fetch(`http://localhost:3001/pokemons?name=${name}`);
+      const response = await fetch(`${urlBack || urlLocal}pokemons?name=${name}`);
       const pokemonJson = await response.json();
       return dispatch({type: "GET_POKEMON_BY_NAME", payload: pokemonJson})
     }
@@ -28,17 +24,15 @@ export function getPokemons() {
 
   export const  getPokemonById =(id)=>{
     return async(dispatch)=>{
-      const response = await fetch(`${urlPokemons}${id}`);
+      const response = await fetch(`${urlBack || urlLocal}pokemons/${id}`);
       const pokemonJson = await response.json();
       return dispatch({type: "GET_POKEMON_BY_ID", payload: pokemonJson})
     }
   }
 
-  const urlTypes = "http://localhost:3001/types"
-
   export function getAllTypes() {
     return function(dispatch) {
-      return fetch(urlTypes)
+      return fetch(`${urlBack || urlLocal}types`)
         .then(response => response.json())
         .then(json => {
           dispatch({ type: "GET_ALL_TYPES", payload: json });
@@ -49,19 +43,9 @@ export function getPokemons() {
   
   export const createPokemon = (input)=>{
     return async(dispatch)=>{
-      const response = await fetch(urlPokemons,
+        const response = await fetch(`${urlBack || urlLocal}pokemons`,
         {method: 'POST',body:JSON.stringify(input),headers: { 'Content-Type': 'application/json' }})
       const pokemonCreatedJson = await response.json();
       return dispatch({type: "CREATE_POKEMON", payload: pokemonCreatedJson})
     }
   }
-
-  /*
-  export const getTypes2 = ()=>{
-      return  async (dispatch)=>{
-          const response = await fetch(urlTypes)
-          const typesJson = await response.json()
-          return dispatch({type: "GET_ALL_TYPES",payload: typesJson})
-      }
-  }
-  */

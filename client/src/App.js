@@ -9,7 +9,6 @@ import PokemonDetails from './src/components/PokemonDetails';
 import CreatePokemon from './src/components/CreatePokemon.jsx';
 import NotFound from './src/components/NotFound';
 
-
 function App() {
   return (
     <React.Fragment>
