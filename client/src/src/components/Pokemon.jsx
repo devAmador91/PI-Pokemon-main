@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { StylePokemon } from "../style-components/style-Pokemon/pokemon";
 import { ImgPokemon } from "../style-components/style-Pokemon/pokemon";
 import { P } from "../style-components/style-Pokemon/pokemon";
-import { Li } from "../style-components/style-Pokemon/pokemon";
+import { Pa } from "../style-components/style-Pokemon/pokemon";
+import { Ul } from "../style-components/style-Pokemon/pokemon";
 
 
 export default function Pokemon({id,name,img,type}){
@@ -15,11 +16,11 @@ export default function Pokemon({id,name,img,type}){
             <NavLink to={{pathname:`/pokemonDetail/${id}`, state:{name,img,type}}} ><ImgPokemon src={img} alt="pokemon" ></ImgPokemon></NavLink> 
             <div>
             <P>{name.replace(name.charAt(0),name.charAt(0).toUpperCase())}</P>
-             <ul>
+             <Ul>
                  {
-                 type ? type.map((t)=><Li key={t}>{t}</Li>): null
+                 type ? type.map((t)=><Pa key={t}>{t}</Pa>): null
                  }
-             </ul>
+             </Ul>
             </div>
          </StylePokemon>
         
