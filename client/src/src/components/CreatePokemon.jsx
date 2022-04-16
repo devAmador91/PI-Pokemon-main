@@ -42,12 +42,6 @@ export default function CreatePokemon() {
     useEffect(()=>{
         dispatch(getAllTypes())
     },[dispatch])
-
-    /*useEffect(()=>{//Pendiente arreglar el aviso de creacion de pokemon
-        if(pokemonCreated.length){
-        copyPokemonCreated.current = pokemonCreated.map((p)=>p)
-        }
-    },[pokemonCreated])*/
     
     const handleChange = (e) => {
         let event = e.target.value //convierto al tipo requerido por la BD

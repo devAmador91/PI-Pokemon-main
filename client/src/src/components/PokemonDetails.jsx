@@ -30,7 +30,7 @@ export default function PokemonDetails(){
         <Background>
             <Statistics>
             <H1>{name.replace(name.charAt(0),name.charAt(0).toUpperCase())}</H1>
-            <h4>Type: {type && type.map((t)=>t)}</h4>
+            <h4>Type: {type && type.map((t)=>`${t} `)}</h4>
             <h4>Height: {height}</h4>
             <h4>Weihht: {weight}</h4>
             <h4>Hp: {hp}</h4>

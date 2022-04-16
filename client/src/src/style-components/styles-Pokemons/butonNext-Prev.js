@@ -7,7 +7,7 @@ color: black;
 background-color: yellow;
 font-size: 15px;
 border-radius: 30px;
-border: 4px solid black;
+border: 1px solid black;
 `
 
 

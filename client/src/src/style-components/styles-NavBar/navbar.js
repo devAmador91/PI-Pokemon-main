@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ContainerHeader = styled.div`
-    background-color: #181a1b;
+
 `;
 
 export const Header = styled.header`
@@ -12,7 +12,6 @@ height: 150px;
 background-color: black;
 padding-left: 100px;
 padding-right: 100px;
-border-bottom: 5px solid #9e8c37;
 `;
 
 export const Input = styled.input`

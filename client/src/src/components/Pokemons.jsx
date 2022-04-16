@@ -9,9 +9,7 @@ import { ContainerButton } from "../style-components/styles-Pokemons/containerBu
 import loading from '../img/Pokemons/loading-3.webp'
 import { ImgLoading } from "../style-components/styles-Pokemons/imgLoading";
 import { useHistory } from "react-router-dom";
-import { ContainerOptions } from "../style-components/styles-Pokemons/containerOptions";
-import { ContainerInput } from "../style-components/styles-Pokemons/containerOptions";
-import { Label } from "../style-components/styles-Pokemons/containerOptions";
+import { ContainerOptions, ContainerUl, Li } from "../style-components/styles-Pokemons/containerOptions";
 import { filterType } from "./FunctionsPokemons/functionsFilters";
 import { filterPokemonCreatedByUser } from "./FunctionsPokemons/functionsFilters";
 import { orderAlphabetically } from "./FunctionsPokemons/functionsFilters";
@@ -21,9 +19,12 @@ import { orderByForceDes } from "./FunctionsPokemons/functionsFilters";
 import { paginationNext } from "./FunctionsPokemons/functionPagination";
 import { paginationPrev } from "./FunctionsPokemons/functionPagination";
 import { Link } from "../style-components/styles-Pokemons/containerOptions";
-import { P } from "../style-components/styles-Pokemons/containerOptions";
 import { structurePage } from "./FunctionsPokemons/functionStructure";
 import { buttonPrev } from "./FunctionsPokemons/functionButtonPrev";
+import { ContainerImgButton } from "../style-components/styles-Pokemons/containerImg";
+import { Ul } from "../style-components/styles-Pokemons/containerOptions";
+import { LiSub } from "../style-components/styles-Pokemons/containerOptions";
+
 
 
 function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes}) {
@@ -61,63 +62,107 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
       structurePage(pokemons,copyPokemons,setPokemons,allPokemons,buttonBackFilterCreated)
   }, [allPokemons, pokemons]); 
 
-
-  
+  console.log(pokemons)
   return (
     <Container>
 
-           {npage.numPage < 1 && <ContainerOptions>
-           <ContainerInput>
+           {npage.numPage < 1 && 
+           <ContainerOptions>
+
+              <ContainerUl>
+                <LiSub><Link to={"#"}>Filter by type</Link>
+                  <Ul>
+                    {allTypes.length && allTypes.map((t)=><Li value={t.name} onClick={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}} key={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</Li>)}
+                  </Ul>
+                  </LiSub>
+
+                  </ContainerUl>  
+
+                  <ContainerUl>
+
+                  <LiSub><Link to={"#"}>Show Pokemons</Link>
+                  <Ul>
+                    <Li onClick={()=>{homeReturn.current = true;setPokemons([])}}>Show all pokemons</Li>
+                    <Li onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}>Show pokemons created by user</Li>
+                  </Ul>
+                  </LiSub>
+
+                  </ContainerUl> 
+
+                  <ContainerUl> 
+
+                  <LiSub><Link to={"#"}>Order by</Link>
+                  <Ul>
+                    <Li onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}>A-Z</Li>
+                    <Li onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}>Z-A</Li>
+                    <Li onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}>Asc by force</Li>
+                    <Li onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}>Desc by force</Li>
+                  </Ul>
+                  </LiSub>
+          </ContainerUl>  
+
+             {/*
+           <ContainerUl>
                 <select name="select" onChange={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}}>
                     {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name} >{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
                 </select>
-           </ContainerInput>
+           </ContainerUl>
 
-           <ContainerInput>
+           <ContainerUl>
                 <input type="radio" name="showPokemons" value={"showAllPokemons"} id="showAll" defaultChecked onClick={()=>{homeReturn.current = true;setPokemons([])}}></input><Label >All Pokemons</Label><br/> 
                 <input type="radio" name="showPokemons" value={"showPokemonsCreatedByUser"} onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}></input><Label >Pokemon by User</Label>
-           </ContainerInput>
+           </ContainerUl>
 
            <Link to={"/createPokemon"}><P>Create your Pokemon</P></Link>
 
-           <ContainerInput>
+           <ContainerUl>
                 <input type="radio" name="showOrder" value={"showOrderAlfabetic"} onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order A-Z</Label> <br/>
                 <input type="radio" name="showOrder" value={"showOrderReverse"} onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order Z-A</Label>
-           </ContainerInput>
+           </ContainerUl>
 
-           <ContainerInput>
+           <ContainerUl>
            <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Asc</Label><br/>
            <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Des</Label>
-           </ContainerInput>
+           </ContainerUl>
+           */}
 
-
+             
       </ContainerOptions>}
 
-      <ContainerImg>
-          {/*si en pokemons existe solo 1 pokemon se renderiza la posicion cero, si no se renderiza en la posicion que este la pag*/}
+        <ContainerImgButton>
+          
+          <ContainerImg>
+           {/*si en pokemons existe solo 1 pokemon se renderiza la posicion cero, si no se renderiza en la posicion que este la pag*/}
             {pokemons.length ? pokemons[pokemons[0].length === 1 ? 0 : npage.numPage].map((p) => { 
                   return (<Pokemon key={p.id} id={p.id} name={p.name} type={p.typeName} img={p.img} />);
                 })
                              : <ImgLoading src={loading} alt="imagen de loading"></ImgLoading>} 
-       </ContainerImg>
+          </ContainerImg>
 
-       <ContainerButton>
+          <ContainerButton>
          {/*cuando se busca por nombre ,aparece el boton atras*/}
-      {(pokemons.length && pokemons[0].length === 1) && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>
+      {(pokemons.length && pokemons[0].length === 1) && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Back</Button>
         } 
 
         {/*cuando se busca por createdByUser ,aparece el boton atras*/}
-      {(pokemons.length && pokemons[0].length > 1) && buttonBackFilterCreated.current && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>}
+      {(pokemons.length && pokemons[0].length > 1) && buttonBackFilterCreated.current && <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Back</Button>}
         
       {/*Cuando se pasa a la paguina siguiente aparece el boton atras */}
-      {(pokemons.length && pokemons[0].length > 1) && npage.numPage > 0 && <Button onClick={()=> paginationPrev(npage,setPage)}>Atras</Button>}
+      {(pokemons.length && pokemons[0].length > 1) && npage.numPage > 0 && <Button onClick={()=> paginationPrev(npage,setPage)}>Back</Button>}
       
       {/*boton siguiente */}    
-      {(pokemons.length && pokemons[0].length > 1) && (npage.numPage < 3 && !buttonBackFilterType.current) && !buttonBackFilterCreated.current && <Button onClick={()=> paginationNext(npage,setPage)}>Siguiente</Button>} 
+      {(pokemons.length && pokemons[0].length > 1) && (npage.numPage < 3 && !buttonBackFilterType.current) && !buttonBackFilterCreated.current && <Button onClick={()=> paginationNext(npage,setPage)}>Next</Button>} 
       
       {/*cuando se busca pot type aparece el boton atras */}
-      {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterType.current &&  <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Atras</Button>}
-      </ContainerButton>   
+      {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterType.current &&  <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Back</Button>}
+      </ContainerButton> 
+
+
+        
+      </ContainerImgButton>
+      
+        
+         
      
       </Container>
   );

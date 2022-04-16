@@ -6,9 +6,7 @@ import { P } from "../style-components/style-Pokemon/pokemon";
 import { Pa } from "../style-components/style-Pokemon/pokemon";
 import { Ul } from "../style-components/style-Pokemon/pokemon";
 
-
 export default function Pokemon({id,name,img,type}){
-//se esta recibiendo namePokemon y typePokemon
 
     return (
         

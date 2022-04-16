@@ -49,3 +49,4 @@ export function getPokemons() {
       return dispatch({type: "CREATE_POKEMON", payload: pokemonCreatedJson})
     }
   }
+

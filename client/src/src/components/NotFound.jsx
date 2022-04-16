@@ -11,7 +11,7 @@ import { ContainerButton } from "../style-components/styles-NotFound/Img"
 export default function NotFound(){
 
     const history = useHistory()
-console.log("hola")
+
         return (
             <Background>
 
