@@ -5,25 +5,29 @@ const {Type} = conn.models;
 const url = "https://pokeapi.co/api/v2/type"
 
 router.get("/types",async(req, res) => { 
- 
+    //existen types en la bsse de datos?
+    const allTypes = await Type.findAll({
+        attributes:["name"]
+    });
     try {
-        await Type.destroy({where:{}}) //elimmina todos los datos de la tabla para que no almacene de mas al recargar la pagina
+        if(!allTypes.length){
+        //Hace la peticion de tipos a la API
         const response = await fetch(url)
         const json = await response.json()
         const tiposPokemon = json.results.map((t)=>t.name)
         
-        //Se cargan mas tipos si se hace otra peticion *******************
-        
+
+        //Ingresa los valores de la api a la BD
         for(let i = 0; i < tiposPokemon.length;i++){
             await Type.create({
                 name:tiposPokemon[i]
             })
         }
-
+        //Pide a la BD todos los tipos y los envia
         const allTypes = await Type.findAll({
             attributes:["name"]
         })
-        
+    }
         return res.send(allTypes)
 
     } catch (error) {
@@ -33,6 +37,11 @@ router.get("/types",async(req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
 
 
 //Tratar se hacerlo con promesas:
