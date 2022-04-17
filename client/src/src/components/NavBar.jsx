@@ -9,7 +9,6 @@ import { Input } from "../style-components/styles-NavBar/navbar";
 import { Button } from "../style-components/styles-NavBar/navbar";
 import { useDispatch } from "react-redux";
 import { getPokemonByName } from "../actions";
-import { ContainerHeader } from "../style-components/styles-NavBar/navbar";
 import { Error } from "../style-components/style-CreatPokemon/container";
 import { validate } from "./FunctionNavBar/validateInput";
 import { Link, useHistory } from "react-router-dom";
@@ -35,10 +34,11 @@ export default function NavBar(){
     }
 
     return(
-        <ContainerHeader>
+       
             <Header>
         
                 <Link to={"/pokemons"}><Pokeball src={imgPokeball} alt="Loge de pokebola"/></Link>
+                
                 <Form onSubmit={(e)=>handleSubmit(e)}>
                     <Input type={"search"} name="buscadorPokemon" value={input.name} onChange={(e)=>handleChange(e)}></Input>
                     {Object.keys(errors).length === 0 && <Button type={"submit"} value="Search"></Button>}
@@ -51,6 +51,6 @@ export default function NavBar(){
 
             </Header>
            
-        </ContainerHeader>
+        
     )
 }

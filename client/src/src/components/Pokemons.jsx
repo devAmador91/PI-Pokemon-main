@@ -71,61 +71,42 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
 
               <ContainerUl>
                 <LiSub><Link to={"#"}>Filter by type</Link>
-                  <Ul>
-                    {allTypes.length && allTypes.map((t)=><Li value={t.name} onClick={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}} key={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</Li>)}
-                  </Ul>
-                  </LiSub>
+                    <Ul>
+                      {allTypes.length && allTypes.map((t)=><Li value={t.name} onClick={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}} key={t.name}>{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</Li>)}
+                    </Ul>
+                </LiSub>
 
-                  </ContainerUl>  
+              </ContainerUl>  
 
-                  <ContainerUl>
+              <ContainerUl>
 
-                  <LiSub><Link to={"#"}>Show Pokemons</Link>
-                  <Ul>
-                    <Li onClick={()=>{homeReturn.current = true;setPokemons([])}}>Show all pokemons</Li>
-                    <Li onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}>Show pokemons created by user</Li>
-                  </Ul>
-                  </LiSub>
+                <LiSub><Link to={"#"}>Show Pokemons</Link>
+                    <Ul>
+                      <Li onClick={()=>{homeReturn.current = true;setPokemons([])}}>Show all pokemons</Li>
+                      <Li onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}>Show pokemons created by user</Li>
+                    </Ul>
+                </LiSub>
 
-                  </ContainerUl> 
+              </ContainerUl> 
 
-                  <ContainerUl> 
+              <ContainerUl> 
 
-                  <LiSub><Link to={"#"}>Order by</Link>
-                  <Ul>
-                    <Li onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}>A-Z</Li>
-                    <Li onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}>Z-A</Li>
-                    <Li onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}>Asc by force</Li>
-                    <Li onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}>Desc by force</Li>
-                  </Ul>
-                  </LiSub>
-          </ContainerUl>  
+                <LiSub><Link to={"#"}>Order by</Link>
+                    <Ul>
+                      <Li onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}>A-Z</Li>
+                      <Li onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}>Z-A</Li>
+                      <Li onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}>Asc by force</Li>
+                      <Li onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}>Desc by force</Li>
+                    </Ul>
+                </LiSub>
 
-             {/*
-           <ContainerUl>
-                <select name="select" onChange={(e)=>{buttonBackFilterType.current = true; filterType(e,setPokemons,allPokemons)}}>
-                    {allTypes.length && allTypes.map((t)=><option key={t.name} value={t.name} >{t.name.replace(t.name.charAt(0),t.name.charAt(0).toUpperCase())}</option>)}
-                </select>
-           </ContainerUl>
+          </ContainerUl> 
 
-           <ContainerUl>
-                <input type="radio" name="showPokemons" value={"showAllPokemons"} id="showAll" defaultChecked onClick={()=>{homeReturn.current = true;setPokemons([])}}></input><Label >All Pokemons</Label><br/> 
-                <input type="radio" name="showPokemons" value={"showPokemonsCreatedByUser"} onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}></input><Label >Pokemon by User</Label>
-           </ContainerUl>
+          <ContainerUl> 
 
-           <Link to={"/createPokemon"}><P>Create your Pokemon</P></Link>
+                <LiSub><Link to={"/about"}>About</Link></LiSub>
 
-           <ContainerUl>
-                <input type="radio" name="showOrder" value={"showOrderAlfabetic"} onClick={()=>{orderAlphabetically(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order A-Z</Label> <br/>
-                <input type="radio" name="showOrder" value={"showOrderReverse"} onClick={()=>{orderReverse(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order Z-A</Label>
-           </ContainerUl>
-
-           <ContainerUl>
-           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceAsc(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Asc</Label><br/>
-           <input type="radio" name="showOrderForce" value={"orderforce"} onClick={()=>{orderByForceDes(allPokemons,setPokemons,copyPokemons)}}></input><Label >Order by force Des</Label>
-           </ContainerUl>
-           */}
-
+          </ContainerUl> 
              
       </ContainerOptions>}
 

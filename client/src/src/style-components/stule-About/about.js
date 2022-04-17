@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 
-export const StylePokemon = styled.div`
+export const StyleDev = styled.div`
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -11,7 +15,7 @@ export const StylePokemon = styled.div`
    border-radius: 30px;
    box-shadow: 12px 5px 5px black;
    margin: 15px;
-   width: 13%;
+   width: 30%;
    overflow: hidden;
    position: relative;
 
@@ -48,39 +52,42 @@ export const StylePokemon = styled.div`
     }
 `;
 
-export const ImgPokemon = styled.img`
+export const ImgDev = styled.img`
 position: relative;
 z-index: 1000;
 padding: 25px;
-width: 9vw;
-&:hover{
-      transform: scale(1.3);
-   }
+width: 60%;
+border-radius: 30px;
 `
 
-export const P = styled.p`
+export const H1 = styled.h1`
 font-family: 'PokemonSolid';
-font-size: 1.7vw;
+font-size: 25px;
 text-align: center;
 color: #e63648;
 position: relative;
 z-index: 1000;
 `
 
-export const Pa = styled.p`
-display: inline-block;
-border-radius: 20px;
-background-color: red;
-font-size: 1.1vw;
-color: black;
-margin-right: 5px;
-padding: 5px;
+export const P = styled.p`
+text-align: center;
+font-size: 18px;
+color: yellow;
+position: relative;
+z-index: 1000;
+`;
+
+export const Li = styled.li`
+flex-direction: column;
+color: yellow;
 position: relative;
 z-index: 1000;
 `;
 
 export const Ul = styled.ul`
 display: flex;
+flex-direction: column;
+list-style: none;
 align-items: center;
 justify-content: center;
 padding: 0px;

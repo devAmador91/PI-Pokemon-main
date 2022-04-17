@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export const ContainerOptions = styled.nav`
 width: 100%;
-height: 50px;
+height: 40px;
 display: flex;
 background-color: black;
 justify-content: space-around;
@@ -73,7 +73,7 @@ export const Link = styled(NavLink)`
 text-decoration: none;
 font-family:'PokemonSolid';
 color: red;
-font-size: 25px;
+font-size: 20px;
 `;
 
 export const LiSub = styled.li`
