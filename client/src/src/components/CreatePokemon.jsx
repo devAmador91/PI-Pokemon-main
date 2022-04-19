@@ -155,16 +155,16 @@ export default function CreatePokemon() {
                 <br/>
                 {errors.img && <Error>{errors.img}</Error>}
 
-                {Object.keys(errors).length === 0 && <ButtonCreate id="buttonCreatePokemon" type={"submit"} value="Crear Pokemón"/>}
+                {Object.keys(errors).length === 0 && <ButtonCreate id="buttonCreatePokemon" type={"submit"} value="Create Pokemón"/>}
                 {pokemonCreated.length && <P>{pokemonCreated[0].msg}</P>}
                 </ContainerInput>
                
 
             </form>
-           
+            <Button onClick={()=>{history.push("/pokemons")}}>Home</Button>
             </Border>
             <ContainerButton>
-            <Button onClick={()=>{history.push("/pokemons")}}>Home</Button>{/*No recarga al regresar al home, el pokemon creado */}
+           
             </ContainerButton>
           
             

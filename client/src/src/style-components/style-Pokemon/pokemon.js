@@ -2,10 +2,7 @@ import styled from 'styled-components';
 
 
 export const StylePokemon = styled.div`
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
+   display: inline-block;
    padding: 5px;
    border: 3px solid yellow;
    border-radius: 30px;
@@ -18,8 +15,8 @@ export const StylePokemon = styled.div`
     &::before{
         content: "";
         position: absolute;
-        width: 500px;
-        height: 110%;
+        width: 1300px;
+        height: 1000px;
         background: linear-gradient(rgba(251, 244, 14, 0.8),
         rgba(163, 17, 6, 0.8),
         rgba(5, 253, 18, 0.8),
@@ -53,6 +50,7 @@ position: relative;
 z-index: 1000;
 padding: 25px;
 width: 9vw;
+height: 15vh;
 &:hover{
       transform: scale(1.3);
    }

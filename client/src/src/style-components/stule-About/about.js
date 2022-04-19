@@ -22,8 +22,8 @@ export const StyleDev = styled.div`
     &::before{
         content: "";
         position: absolute;
-        width: 500px;
-        height: 110%;
+        width: 1000px;
+        height: 1000px;
         background: linear-gradient(rgba(251, 244, 14, 0.8),
         rgba(163, 17, 6, 0.8),
         rgba(5, 253, 18, 0.8),

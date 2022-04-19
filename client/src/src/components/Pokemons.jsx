@@ -6,7 +6,7 @@ import { ContainerImg } from "../style-components/styles-Pokemons/containerImg";
 import { Button } from "../style-components/styles-Pokemons/butonNext-Prev";
 import { Container } from "../style-components/styles-Pokemons/container";
 import { ContainerButton } from "../style-components/styles-Pokemons/containerButton";
-import loading from '../img/Pokemons/loading-3.webp'
+import loading from '../img/Pokemons/loading-8.gif'
 import { ImgLoading } from "../style-components/styles-Pokemons/imgLoading";
 import { useHistory } from "react-router-dom";
 import { ContainerOptions, ContainerUl, Li } from "../style-components/styles-Pokemons/containerOptions";
@@ -19,6 +19,7 @@ import { orderByForceDes } from "./FunctionsPokemons/functionsFilters";
 import { paginationNext } from "./FunctionsPokemons/functionPagination";
 import { paginationPrev } from "./FunctionsPokemons/functionPagination";
 import { Link } from "../style-components/styles-Pokemons/containerOptions";
+import { LinkCreate } from "../style-components/styles-Pokemons/containerOptions";
 import { structurePage } from "./FunctionsPokemons/functionStructure";
 import { buttonPrev } from "./FunctionsPokemons/functionButtonPrev";
 import { ContainerImgButton } from "../style-components/styles-Pokemons/containerImg";
@@ -62,7 +63,7 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
       structurePage(pokemons,copyPokemons,setPokemons,allPokemons,buttonBackFilterCreated)
   }, [allPokemons, pokemons]); 
 
-  console.log(pokemons)
+  
   return (
     <Container>
 
@@ -85,6 +86,13 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
                       <Li onClick={()=>{homeReturn.current = true;setPokemons([])}}>Show all pokemons</Li>
                       <Li onClick={()=>{buttonBackFilterCreated.current = true;filterPokemonCreatedByUser(allPokemons,setPokemons)}}>Show pokemons created by user</Li>
                     </Ul>
+                </LiSub>
+
+              </ContainerUl> 
+
+              <ContainerUl>
+                <LiSub>
+                <LinkCreate to={"/createPokemon"}>Create your Pokemon</LinkCreate>
                 </LiSub>
 
               </ContainerUl> 
@@ -132,7 +140,7 @@ function Pokemons({ getAllPokemons,getTypes, allPokemons, PokemonByName,allTypes
       {(pokemons.length && pokemons[0].length > 1) && npage.numPage > 0 && <Button onClick={()=> paginationPrev(npage,setPage)}>Back</Button>}
       
       {/*boton siguiente */}    
-      {(pokemons.length && pokemons[0].length > 1) && (npage.numPage < 3 && !buttonBackFilterType.current) && !buttonBackFilterCreated.current && <Button onClick={()=> paginationNext(npage,setPage)}>Next</Button>} 
+      {(pokemons.length && pokemons[0].length > 1) && (npage.numPage < 3 && !buttonBackFilterType.current) && !buttonBackFilterCreated.current && <Button onClick={()=>{paginationNext(npage,setPage)}}>Next</Button>} 
       
       {/*cuando se busca pot type aparece el boton atras */}
       {(pokemons.length && pokemons[0].length > -1) && buttonBackFilterType.current &&  <Button onClick={()=>buttonPrev(homeReturn,setPokemons)}>Back</Button>}

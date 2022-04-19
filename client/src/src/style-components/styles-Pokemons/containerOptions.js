@@ -9,7 +9,6 @@ height: 40px;
 display: flex;
 background-color: black;
 justify-content: space-around;
-margin-bottom: 45px;
 border-radius: 0px 0px 50px 50px;
 border-bottom: 3px solid yellow;
 box-shadow: 3px 3px 5px yellow;
@@ -76,6 +75,16 @@ color: red;
 font-size: 20px;
 `;
 
+export const LinkCreate = styled(NavLink)`
+text-decoration: none;
+font-family:'PokemonSolid';
+color: yellow;
+font-size: 20px;
+&:hover{
+    color: black;
+}
+`;
+
 export const LiSub = styled.li`
 
 position: relative;
@@ -126,3 +135,4 @@ cursor: pointer;
 }
 padding: 3px;
 `;
+

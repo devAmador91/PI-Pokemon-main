@@ -7,12 +7,15 @@ import { ImgText } from "../style-components/styles-NotFound/Img"
 import { Button } from "../style-components/styles-NotFound/Img"
 import { useHistory } from "react-router-dom"
 import { ContainerButton } from "../style-components/styles-NotFound/Img"
+import { Container } from "../style-components/styles-NotFound/Img"
 
 export default function NotFound(){
 
     const history = useHistory()
 
         return (
+            <Container>
+            
             <Background>
 
                 <ImgText>
@@ -24,5 +27,7 @@ export default function NotFound(){
                 </ContainerButton>
                 
             </Background>
+
+            </Container>
         )
     }

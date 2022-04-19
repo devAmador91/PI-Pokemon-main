@@ -41,7 +41,7 @@ export default function NavBar(){
                 
                 <Form onSubmit={(e)=>handleSubmit(e)}>
                     <Input type={"search"} name="buscadorPokemon" value={input.name} onChange={(e)=>handleChange(e)}></Input>
-                    {Object.keys(errors).length === 0 && <Button type={"submit"} value="Search"></Button>}
+                    {Object.keys(errors).length === 0 && input.name && <Button type={"submit"} value="Search"></Button>}
                     <br/>
                     {errors.name && <Error>{errors.name}</Error>}
                     
