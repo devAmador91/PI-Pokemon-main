@@ -4,6 +4,8 @@ const { Sequelize } = require('sequelize');
 const modelPokemon = require("./models/Pokemon.js"); 
 const modelType = require("./models/Type.js")
 
+//configuracion de la conexion a la base de datos a la nube o a local
+
 const sequelize = process.env.NODE_ENV === "production"
 ? new Sequelize({
     database: DB_NAME,
